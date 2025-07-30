@@ -1,0 +1,18 @@
+app:
+  applicationId: "8a47e247-b838-469c-a2fb-8c6113ef7751"
+  env: "Production"
+  host: "https://kalderos-ce-api-prod.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${GRAPPA_API_PROD_USERNAME}"
+  #   password: "${GRAPPA_API_PROD_PASSWORD}"

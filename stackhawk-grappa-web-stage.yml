@@ -1,0 +1,18 @@
+app:
+  applicationId: "4129c0f4-634f-4a86-958e-0617d989171b"
+  env: "stage"
+  host: "https://kalderos-ce-web-stage.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${GRAPPA_WEB_STAGE_USERNAME}"
+  #   password: "${GRAPPA_WEB_STAGE_PASSWORD}"

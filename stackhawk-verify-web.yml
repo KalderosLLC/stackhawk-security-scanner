@@ -1,0 +1,18 @@
+app:
+  applicationId: "42e3bb13-a565-458e-b392-e828df21c7e7"
+  env: "Production"
+  host: "https://verify-web-prod-northcentral.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${VERIFY_USERNAME}"
+  #   password: "${VERIFY_PASSWORD}"

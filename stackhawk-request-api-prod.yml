@@ -1,0 +1,18 @@
+app:
+  applicationId: "788b8d69-4009-431e-bf84-4a08cb2236b5"
+  env: "prod"
+  host: "https://krequest-api-prod.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${REQUEST_API_PROD_USERNAME}"
+  #   password: "${REQUEST_API_PROD_PASSWORD}"

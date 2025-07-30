@@ -1,0 +1,18 @@
+app:
+  applicationId: "c8558150-7ed2-4a7a-b75a-737556328866"
+  env: "prod"
+  host: "https://verify-api-prod-northcentral.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${VERIFY_API_PROD_USERNAME}"
+  #   password: "${VERIFY_API_PROD_PASSWORD}"

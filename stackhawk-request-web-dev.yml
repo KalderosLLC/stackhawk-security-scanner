@@ -1,0 +1,18 @@
+app:
+  applicationId: "b59dc63a-0a1c-46ca-9848-08c04a7b07d2"
+  env: "dev"
+  host: "https://krequest-web-dev.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${REQUEST_WEB_DEV_USERNAME}"
+  #   password: "${REQUEST_WEB_DEV_PASSWORD}"

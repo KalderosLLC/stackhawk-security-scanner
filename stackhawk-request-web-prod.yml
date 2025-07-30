@@ -1,0 +1,18 @@
+app:
+  applicationId: "771a21c0-2f96-4b79-99ff-7976f4ee44ae"
+  env: "prod"
+  host: "https://krequest-web-prod.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${REQUEST_WEB_PROD_USERNAME}"
+  #   password: "${REQUEST_WEB_PROD_PASSWORD}"

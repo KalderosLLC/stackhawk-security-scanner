@@ -1,0 +1,18 @@
+app:
+  applicationId: "f40a83fa-c513-4872-b425-9601568d103d"
+  env: "stage"
+  host: "https://verify-web-stage-northcentral.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${VERIFY_WEB_STAGE_USERNAME}"
+  #   password: "${VERIFY_WEB_STAGE_PASSWORD}"

@@ -1,0 +1,18 @@
+app:
+  applicationId: "e06fbee9-1e32-48a9-9393-4bf3cca91bd9"
+  env: "test"
+  host: "https://verify-api-test-northcentral.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${VERIFY_API_TEST_USERNAME}"
+  #   password: "${VERIFY_API_TEST_PASSWORD}"

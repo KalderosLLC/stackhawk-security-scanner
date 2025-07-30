@@ -1,0 +1,40 @@
+name: StackHawk Hourly Security Scans
+
+on:
+  schedule:
+    # Run every hour at minute 0 (e.g., 9:00, 10:00, 11:00, etc.)
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  stackhawk-bulk-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120  # 2 hours timeout for all scans
+    
+    steps:
+    - name: 🔍 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🦅 Install StackHawk CLI
+      run: |
+        curl -L https://download.stackhawk.com/hawk/cli/hawk-linux.zip -o hawk.zip
+        unzip hawk.zip
+        sudo mv hawk /usr/local/bin/
+        hawk version
+        
+    - name:  Run bulk security scans
+      env:
+        HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
+      run: |
+        echo "🦅 Starting StackHawk bulk security scans..."
+        chmod +x ./bulk-scan-runner.sh
+        ./bulk-scan-runner.sh
+        
+    - name: 📊 Upload scan results
+      uses: actions/upload-artifact@v4
+      if: always()  # Upload results even if scans fail
+      with:
+        name: stackhawk-scan-results-${{ github.run_number }}
+        path: bulk-scan-results-*.log
+        retention-days: 30

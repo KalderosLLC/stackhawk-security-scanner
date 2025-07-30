@@ -1,0 +1,18 @@
+app:
+  applicationId: "59e180ac-5935-44a9-b08d-1595cde40c7e"
+  env: "dev"
+  host: "https://kpay-api-dev.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${PAY_API_DEV_USERNAME}"
+  #   password: "${PAY_API_DEV_PASSWORD}"

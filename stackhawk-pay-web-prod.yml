@@ -1,0 +1,18 @@
+app:
+  applicationId: "9394d345-4764-4087-ad15-61cb7fa910b4"
+  env: "prod"
+  host: "https://kpay-web-prod.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${PAY_WEB_PROD_USERNAME}"
+  #   password: "${PAY_WEB_PROD_PASSWORD}"

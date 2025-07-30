@@ -1,0 +1,18 @@
+app:
+  applicationId: "52cef50e-2bc5-4489-a069-7e1a7c197b6c"
+  env: "test"
+  host: "https://kalderos-ce-api-test.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${GRAPPA_API_TEST_USERNAME}"
+  #   password: "${GRAPPA_API_TEST_PASSWORD}"

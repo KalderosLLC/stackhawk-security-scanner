@@ -1,0 +1,18 @@
+app:
+  applicationId: "c2e4c4f6-389a-451a-ac27-1c0bdef1a6b4"
+  env: "test"
+  host: "https://verify-web-test-northcentral.azurewebsites.net"
+
+hawk:
+  spider:
+    base: true
+    maxDuration: 15
+    
+  # Uncomment if authentication is needed
+  # authentication:
+  #   type: "form"
+  #   loginPath: "/login"
+  #   usernameField: "username" 
+  #   passwordField: "password"
+  #   username: "${VERIFY_WEB_TEST_USERNAME}"
+  #   password: "${VERIFY_WEB_TEST_PASSWORD}"
