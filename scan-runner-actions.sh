@@ -54,6 +54,11 @@ run_scan() {
     echo "   🚀 Starting scan..."
     if [[ "$HAWK_CMD" == *"docker"* ]]; then
         # Use Docker command - pass API key properly to container
+        echo "   🔍 Debug: Running Docker with API key length: ${#HAWK_API_KEY}"
+        # Test if API key makes it to the container
+        echo "   🔍 Testing environment variable in container:"
+        docker run --rm -v "$(pwd):/hawk:rw" -e "HAWK_API_KEY=${HAWK_API_KEY}" stackhawk/hawkscan /bin/sh -c 'echo "Inside container - API key length: ${#HAWK_API_KEY}"'
+        echo "   🔍 Running actual scan..."
         if docker run --rm -v "$(pwd):/hawk:rw" -e "HAWK_API_KEY=${HAWK_API_KEY}" stackhawk/hawkscan "$config_file"; then
             echo "   🎉 Scan completed successfully for $app_name"
             return 0
