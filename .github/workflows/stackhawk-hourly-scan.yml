@@ -18,10 +18,32 @@ jobs:
       
     - name: 🦅 Install StackHawk CLI
       run: |
-        curl -L https://download.stackhawk.com/hawk/cli/hawk-linux.zip -o hawk.zip
-        unzip hawk.zip
-        sudo mv hawk /usr/local/bin/
-        hawk version
+        # Try multiple installation methods for StackHawk CLI
+        echo "Installing StackHawk CLI..."
+        
+        # Method 1: Try the official installer script
+        if curl -sSL https://download.stackhawk.com/hawk/install.sh | bash; then
+          echo "✅ StackHawk CLI installed via install script"
+          hawk version
+        # Method 2: Try direct download with different URL
+        elif curl -L "https://github.com/stackhawk/stackhawk-cli/releases/latest/download/hawk-linux.zip" -o hawk.zip && \
+             unzip hawk.zip && \
+             sudo mv hawk /usr/local/bin/ && \
+             rm hawk.zip; then
+          echo "✅ StackHawk CLI installed via GitHub releases"
+          hawk version
+        # Method 3: Use npm if available
+        elif command -v npm &> /dev/null && npm install -g @stackhawk/cli; then
+          echo "✅ StackHawk CLI installed via npm"
+          hawk version
+        else
+          echo "❌ Failed to install StackHawk CLI"
+          echo "Available alternatives:"
+          echo "1. Install locally: npm install -g @stackhawk/cli"
+          echo "2. Use Docker: docker run --rm stackhawk/hawkscan"
+          echo "3. Manual download from: https://docs.stackhawk.com/hawkscan/installation/"
+          exit 1
+        fi
         
     - name:  Run bulk security scans
       env:
