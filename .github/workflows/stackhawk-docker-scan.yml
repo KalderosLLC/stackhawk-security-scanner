@@ -26,124 +26,36 @@ jobs:
         HAWK_API_KEY: ${{ secrets.HAWK_API_KEY }}
       run: |
         echo "🦅 Starting StackHawk bulk security scans..."
+        chmod +x ./scan-runner-actions.sh
         chmod +x ./bulk-scan-runner.sh
         
-        # Create a Docker-compatible version of the scan runner
-        cat > docker-scan-runner.sh << 'EOF'
-        #!/bin/bash
+        # Test single scan first to check for obvious issues
+        echo "🧪 Testing single scan first..."
+        ./scan-runner-actions.sh list
         
-        echo "🔍 StackHawk Docker Bulk Scan Runner"
-        echo "=============================="
-        
-        total_count=0
-        success_count=0
-        failure_count=0
-        declare -a successful_scans=()
-        declare -a failed_scans=()
-        start_time=$(date +%s)
-        
-        log_file="bulk-scan-results-$(date +%Y%m%d-%H%M%S).log"
-        echo "📝 Logging results to: $log_file"
-        
-        # Function to log with timestamp
-        log_with_timestamp() {
-            local message="$1"
-            local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-            echo "[$timestamp] $message" | tee -a "$log_file"
-        }
-        
-        # Function to run scan for a single config
-        run_single_scan() {
-            local config_file="$1"
-            local app_name="${config_file%.yml}"
-            app_name="${app_name#stackhawk-}"
+        # Get first config file for test
+        FIRST_CONFIG=$(ls stackhawk-*.yml | head -1)
+        if [ -n "$FIRST_CONFIG" ]; then
+            echo "🔍 Testing with: $FIRST_CONFIG"
+            APP_NAME="${FIRST_CONFIG%.yml}"
+            APP_NAME="${APP_NAME#stackhawk-}"
             
-            echo "🦅 Processing: $app_name"
-            echo "   Config: $config_file"
-            log_with_timestamp "Starting scan for $app_name using $config_file"
-            
-            if [ ! -f "$config_file" ]; then
-                echo "   ❌ Configuration file not found: $config_file"
-                log_with_timestamp "ERROR: Configuration file not found: $config_file"
-                failed_scans+=("$app_name (file not found)")
-                ((failure_count++))
-                return 1
-            fi
-            
-            echo "   🚀 Running scan..."
-            if docker run --rm -v "$(pwd):/hawk:rw" -e HAWK_API_KEY="$HAWK_API_KEY" stackhawk/hawkscan "$config_file" >> "$log_file" 2>&1; then
-                echo "   ✅ SUCCESS: $app_name scan completed"
-                log_with_timestamp "SUCCESS: $app_name scan completed successfully"
-                successful_scans+=("$app_name")
-                ((success_count++))
-                return 0
+            echo "🚀 Running test scan for $APP_NAME..."
+            if ./scan-runner-actions.sh "$APP_NAME"; then
+                echo "✅ Test scan successful, proceeding with bulk scan..."
+                ./bulk-scan-runner.sh
             else
-                echo "   ❌ FAILED: $app_name scan failed"
-                log_with_timestamp "FAILURE: $app_name scan failed"
-                failed_scans+=("$app_name")
-                ((failure_count++))
-                return 1
-            fi
-        }
-        
-        log_with_timestamp "Starting bulk scan process with Docker"
-        echo "🔄 Starting bulk scan for all StackHawk configurations..."
-        
-        # Loop through all stackhawk-*.yml files
-        for config_file in stackhawk-*.yml; do
-            if [ -f "$config_file" ]; then
-                ((total_count++))
-                run_single_scan "$config_file"
+                echo "❌ Test scan failed, checking common issues..."
+                echo "� Configuration file contents:"
+                head -20 "$FIRST_CONFIG"
                 echo ""
-                sleep 2
+                echo "� API Key status: ${HAWK_API_KEY:+SET (length: ${#HAWK_API_KEY})}${HAWK_API_KEY:-NOT SET}"
+                exit 1
             fi
-        done
-        
-        # Generate final report
-        end_time=$(date +%s)
-        execution_time=$((end_time - start_time))
-        execution_minutes=$((execution_time / 60))
-        execution_seconds=$((execution_time % 60))
-        
-        echo "=================================="
-        echo "🏁 BULK SCAN COMPLETED"
-        echo "=================================="
-        echo "📊 SUMMARY:"
-        echo "   Total configurations: $total_count"
-        echo "   Successful scans: $success_count"
-        echo "   Failed scans: $failure_count"
-        if [ $total_count -gt 0 ]; then
-            echo "   Success rate: $(( success_count * 100 / total_count ))%"
-        fi
-        echo "   Execution time: ${execution_minutes}m ${execution_seconds}s"
-        
-        if [ ${#successful_scans[@]} -gt 0 ]; then
-            echo "✅ SUCCESSFUL SCANS:"
-            for scan in "${successful_scans[@]}"; do
-                echo "   ✓ $scan"
-            done
-        fi
-        
-        if [ ${#failed_scans[@]} -gt 0 ]; then
-            echo "❌ FAILED SCANS:"
-            for scan in "${failed_scans[@]}"; do
-                echo "   ✗ $scan"
-            done
-        fi
-        
-        log_with_timestamp "Bulk scan completed - Total: $total_count, Success: $success_count, Failed: $failure_count"
-        
-        if [ $failure_count -eq 0 ]; then
-            echo "🎉 All scans completed successfully!"
-            exit 0
         else
-            echo "⚠️  Some scans failed. Check the details above and in the log file."
+            echo "❌ No configuration files found"
             exit 1
         fi
-        EOF
-        
-        chmod +x docker-scan-runner.sh
-        ./docker-scan-runner.sh
         
     - name: 📊 Upload scan results
       uses: actions/upload-artifact@v4
