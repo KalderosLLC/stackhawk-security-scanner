@@ -8,7 +8,7 @@ echo "======================================="
 if [ -n "$GITHUB_ACTIONS" ]; then
     echo "🚀 Running in GitHub Actions environment"
     # In GitHub Actions, we'll use Docker
-    HAWK_CMD="docker run --rm -v $(pwd):/hawk:rw -e HAWK_API_KEY=\"$HAWK_API_KEY\" stackhawk/hawkscan"
+    HAWK_CMD="docker run --rm -v $(pwd):/hawk:rw -e API_KEY=\"$HAWK_API_KEY\" stackhawk/hawkscan"
 else
     echo "🏠 Running in local environment"
     # Try to find local StackHawk CLI
@@ -53,9 +53,9 @@ run_scan() {
     
     echo "   🚀 Starting scan..."
     if [[ "$HAWK_CMD" == *"docker"* ]]; then
-        # Use Docker command - pass API key properly to container
-        # The key issue might be the working directory in the container
-        if docker run --rm -v "$(pwd):/hawk:rw" -w /hawk -e "HAWK_API_KEY=${HAWK_API_KEY}" stackhawk/hawkscan "$config_file"; then
+        # Use Docker command - pass HAWK_API_KEY as API_KEY to container
+        # The key issue: StackHawk Docker expects API_KEY environment variable
+        if docker run --rm -v "$(pwd):/hawk:rw" -w /hawk -e "API_KEY=${HAWK_API_KEY}" stackhawk/hawkscan "$config_file"; then
             echo "   🎉 Scan completed successfully for $app_name"
             return 0
         else
