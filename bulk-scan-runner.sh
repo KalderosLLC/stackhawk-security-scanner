@@ -49,9 +49,16 @@ run_single_scan() {
         return 1
     fi
     
-    # Run the scan using scan-runner.sh
+    # Run the scan using the appropriate scanner
     echo "   🚀 Running scan..."
-    if ./scan-runner.sh "$app_name" >> "$log_file" 2>&1; then
+    # Use GitHub Actions compatible script if available, otherwise fall back to local script
+    if [ -n "$GITHUB_ACTIONS" ] && [ -f "./scan-runner-actions.sh" ]; then
+        scan_script="./scan-runner-actions.sh"
+    else
+        scan_script="./scan-runner.sh"
+    fi
+    
+    if $scan_script "$app_name" >> "$log_file" 2>&1; then
         echo "   ✅ SUCCESS: $app_name scan completed"
         log_with_timestamp "SUCCESS: $app_name scan completed successfully"
         successful_scans+=("$app_name")
