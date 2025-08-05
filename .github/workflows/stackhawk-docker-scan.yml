@@ -1,4 +1,4 @@
-name: StackHawk Hourly Security Scans (Docker)
+name: StackHawk Weekly Security Scans (Docker)
 
 on:
   schedule:
