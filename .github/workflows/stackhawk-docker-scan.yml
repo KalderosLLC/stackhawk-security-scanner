@@ -2,7 +2,7 @@ name: StackHawk Weekly Security Scans (Docker)
 
 on:
   schedule:
-    # Run weekly Monday at 10:00 AM UTC)
+    # Run weekly Monday at 10:00 AM (UTC)
     - cron: '0 10 * * 1'
   workflow_dispatch:
     # Allow manual triggering
