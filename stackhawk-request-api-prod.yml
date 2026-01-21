@@ -2,6 +2,8 @@ app:
   applicationId: "788b8d69-4009-431e-bf84-4a08cb2236b5"
   env: "prod"
   host: "https://krequest-api-prod.azurewebsites.net"
+  openApiConf:
+    filePath: "openapi/kalderos-request-api-swagger.json"
 
 hawk:
   spider:
