@@ -2,6 +2,8 @@ app:
   applicationId: "c8558150-7ed2-4a7a-b75a-737556328866"
   env: "prod"
   host: "https://verify-api-prod-northcentral.azurewebsites.net"
+  openApiConf:
+    filePath: "openapi/verify-api-swagger.json"
 
 hawk:
   spider:
