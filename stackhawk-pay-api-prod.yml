@@ -2,6 +2,8 @@ app:
   applicationId: "b7dc163b-6f5d-4114-ae57-3d5ec118aaf7"
   env: "prod"
   host: "https://kpay-api-prod.azurewebsites.net"
+  openApiConf:
+    filePath: "openapi/kalderos-pay-api-swagger.json"  
 
 hawk:
   spider:
