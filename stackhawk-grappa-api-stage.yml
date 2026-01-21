@@ -2,6 +2,8 @@ app:
   applicationId: "714c8dc1-e3ef-4b53-97b9-5734a2966dba"
   env: "stage"
   host: "https://kalderos-ce-api-stage.azurewebsites.net"
+  openApiConf:
+    filePath: "openapi/grappa-api-core-swagger.json"  
 
 hawk:
   spider:
