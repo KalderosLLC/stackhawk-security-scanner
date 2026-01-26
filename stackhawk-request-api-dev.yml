@@ -3,7 +3,7 @@ app:
   env: "dev"
   host: "https://krequest-api-dev.azurewebsites.net"
   openApiConf:
-    filePath: "openapi/kalderos-request-api-swagger.json"  
+    filePath: "./openapi/kalderos-request-api-swagger.json"  
 
 hawk:
   spider:
