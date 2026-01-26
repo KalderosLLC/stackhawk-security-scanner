@@ -3,7 +3,7 @@ app:
   env: "stage"
   host: "https://kalderos-ce-api-stage.azurewebsites.net"
   openApiConf:
-    filePath: "openapi/grappa-api-core-swagger.json"  
+    filePath: "./openapi/grappa-api-core-swagger.json"  
 
 hawk:
   spider:
