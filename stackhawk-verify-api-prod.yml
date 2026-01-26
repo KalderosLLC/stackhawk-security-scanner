@@ -3,7 +3,7 @@ app:
   env: "prod"
   host: "https://verify-api-prod-northcentral.azurewebsites.net"
   openApiConf:
-    filePath: "openapi/verify-api-swagger.json"
+    filePath: "./openapi/verify-api-swagger.json"
 
 hawk:
   spider:
