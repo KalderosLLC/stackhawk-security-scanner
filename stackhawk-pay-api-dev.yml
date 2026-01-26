@@ -3,7 +3,7 @@ app:
   env: "dev"
   host: "https://kpay-api-dev.azurewebsites.net"
   openApiConf:
-    filePath: "openapi/kalderos-pay-api-swagger.json"  
+    filePath: "./openapi/kalderos-pay-api-swagger.json"  
 
 hawk:
   spider:
